@@ -5,15 +5,11 @@ return {
 		"WhoIsSethDaniel/mason-tool-installer.nvim",
 	},
 	config = function()
-		-- import mason
 		local mason = require("mason")
-
-		-- import mason-lspconfig
 		local mason_lspconfig = require("mason-lspconfig")
+		local tool_installer = require("mason-tool-installer")
 
-		local mason_tool_installer = require("mason-tool-installer")
-
-		-- enable mason and configure icons
+		-- Mason UI
 		mason.setup({
 			ui = {
 				icons = {
@@ -24,28 +20,33 @@ return {
 			},
 		})
 
+		-- Ensure these LSP servers are installed
 		mason_lspconfig.setup({
-			-- list of servers for mason to install
 			ensure_installed = {
-				"ts_ls",
-				"html",
-				"cssls",
-				"tailwindcss",
-				"lua_ls",
-				"gopls",
-				"emmet_ls",
-				"pyright",
+				"ts_ls", -- TypeScript / JavaScript
+				"html", -- HTML
+				"cssls", -- CSS
+				"tailwindcss", -- Tailwind CSS
+				"lua_ls", -- Lua
+				"gopls", -- Go
+				"emmet_ls", -- Emmet
+				"pyright", -- Python
+				"jsonls", -- JSON
+				"yamlls", -- YAML
 			},
 		})
 
-		mason_tool_installer.setup({
+		-- Ensure these tools (formatters, linters) are installed
+		tool_installer.setup({
 			ensure_installed = {
-				"prettier", -- prettier formatter
-				"stylua", -- lua formatter
-				"isort", -- python formatter
-				"black", -- python formatter
-				"pylint",
-				"eslint_d",
+				"prettier", -- Prettier formatter
+				"stylua", -- Lua formatter
+				"isort", -- Python import sorter
+				"black", -- Python formatter
+				"pylint", -- Python linter
+				"eslint_d", -- JS/TS linter
+				"prettierd", -- Faster prettier
+				"biome", -- Ultra-fast JS/TS formatter/linter
 			},
 		})
 	end,
