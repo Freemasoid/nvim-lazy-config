@@ -12,8 +12,5 @@ return {
 	priority = 1000,
 	config = function()
 		ColorMyPensils()
-		require("gruvbox").setup({
-			contrast = "hard",
-		})
 	end,
 }

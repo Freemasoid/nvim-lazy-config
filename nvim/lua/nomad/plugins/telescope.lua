@@ -6,6 +6,7 @@ return {
 		{ "nvim-telescope/telescope-fzf-native.nvim", build = "make" },
 		"nvim-tree/nvim-web-devicons",
 		"folke/todo-comments.nvim",
+		"ahmedkhalf/project.nvim",
 	},
 	config = function()
 		local telescope = require("telescope")
@@ -25,6 +26,20 @@ return {
 		telescope.setup({
 			defaults = {
 				path_display = { "smart" },
+				file_ignore_patterns = {
+					"node_modules",
+					".git",
+					".next",
+					"build",
+					"dist",
+					"*.lock",
+					"ios/build",
+					"android/build",
+					"android/app/build",
+					".expo",
+					".expo-shared",
+					"coverage",
+				},
 				mappings = {
 					i = {
 						["<C-k>"] = actions.move_selection_previous, -- move to prev result
@@ -34,12 +49,48 @@ return {
 					},
 				},
 			},
+			pickers = {
+				find_files = {
+					hidden = true,
+					find_command = {
+						"rg",
+						"--files",
+						"--hidden",
+						"--glob",
+						"!**/.git/*",
+						"--glob", 
+						"!**/node_modules/*",
+						"--glob",
+						"!**/.next/*",
+						"--glob",
+						"!**/build/*",
+					},
+				},
+			},
 		})
 
 		telescope.load_extension("fzf")
+		telescope.load_extension("projects")
+
+		-- Project.nvim setup
+		require("project_nvim").setup({
+			detection_methods = { "pattern", "lsp" },
+			patterns = { 
+				".git", 
+				"package.json", 
+				"Makefile", 
+				"app.json", 
+				"metro.config.js",
+				"expo.json",
+				"next.config.js"
+			},
+			exclude_dirs = { "~/Downloads/*" },
+			show_hidden = false,
+			silent_chdir = true,
+			scope_chdir = "global",
+		})
 
 		-- set keymaps
-
 		vim.keymap.set("n", "<leader>ff", "<cmd>Telescope find_files<cr>", { desc = "Fuzzy find files in cwd" })
 		vim.keymap.set("n", "<leader>fr", "<cmd>Telescope oldfiles<cr>", { desc = "Fuzzy find recent files" })
 		vim.keymap.set("n", "<leader>fs", "<cmd>Telescope live_grep<cr>", { desc = "Find string in cwd" })
@@ -50,5 +101,9 @@ return {
 			{ desc = "Find string under cursor in cwd" }
 		)
 		vim.keymap.set("n", "<leader>ft", "<cmd>TodoTelescope<cr>", { desc = "Find todos" })
+		vim.keymap.set("n", "<leader>fp", "<cmd>Telescope projects<cr>", { desc = "Find projects" })
+		vim.keymap.set("n", "<leader>fb", "<cmd>Telescope buffers<cr>", { desc = "Find buffers" })
+		vim.keymap.set("n", "<leader>fh", "<cmd>Telescope help_tags<cr>", { desc = "Find help" })
+		vim.keymap.set("n", "<leader>fw", "<cmd>Telescope grep_string<cr>", { desc = "Find word under cursor" })
 	end,
 }
