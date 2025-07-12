@@ -6,7 +6,7 @@ return {
 		"hrsh7th/cmp-path", -- source for file system path
 		{
 			"L3MON4D3/LuaSnip",
-			version = "v2.3",
+			version = "v2.*",
 		},
 		"saadparwaiz1/cmp_luasnip", -- for autocompletion
 		"rafamadriz/friendly-snippets", -- snippets

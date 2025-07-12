@@ -42,7 +42,7 @@ return {
 
 		-- Configure linters conditionally
 		lint.linters_by_ft = {
-			python = { "pylint" },
+			python = { "flake8" }, -- Standard Python linter
 			go = { "golangcilint" },
 		}
 
