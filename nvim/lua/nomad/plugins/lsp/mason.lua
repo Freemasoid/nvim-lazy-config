@@ -43,7 +43,8 @@ return {
 				"stylua", -- Lua formatter
 				"isort", -- Python import sorter
 				"black", -- Python formatter
-				"pylint", -- Python linter
+				"flake8", -- Python linter (standard)
+				"pylint", -- Python linter (comprehensive)
 				"eslint_d", -- JS/TS linter
 				"prettierd", -- Faster prettier
 				"biome", -- Ultra-fast JS/TS formatter/linter
